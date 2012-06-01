@@ -15,7 +15,7 @@ module Support::ParamsHelper
   end
 
   def valid_sort
-    (@sort_key && @sort_order) ? @sort_key.to_sym.send(@sort_order.to_sym) : {}
+    (@sort_key && @sort_order) ? {:order => [@sort_key.to_sym.send(@sort_order.to_sym)]} : {}
   end
 
   def valid_filter
