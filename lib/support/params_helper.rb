@@ -4,13 +4,13 @@ module Support::ParamsHelper
     handle_session_param(name, [name], [context, name], default)
   end
 
-  def sort_param(context, defaults)
+  def sort_param(context, defaults = {})
     raise if defaults.keys.length > 1
     handle_session_param(:sort_key, [:sort_key], [context, :sort_key], defaults.keys.first)
     handle_session_param(:sort_order, [:sort_order], [context, :sort_order], defaults.values.first)
   end
 
-  def filter_param(context, defaults)
+  def filter_param(context, defaults = {})
     raise if defaults.keys.length > 1
     handle_session_param(:filter_key, [:filter_key], [context, :filter_key], defaults.keys.first)
     handle_session_param(:filter_value, [:filter_value], [context, :filter_value], defaults.values.first)
