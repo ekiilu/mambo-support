@@ -29,13 +29,13 @@ private
     val = traverse_hash(params, param_keys) || traverse_hash(session, session_keys)
     val = default if val.blank?
     instance_variable_set("@#{var_name}".to_sym, val)
-    traverse_hash(session, session_keys, val)
+    traverse_hash(session, session_keys, session_keys.last.to_sym => val)
   end
 
-  def traverse_hash(hash, keys, val = nil)
+  def traverse_hash(hash, keys, merge = {})
     keys.inject(hash) do |s, k|
       if k == keys.last
-        s[k] = val if val
+        merge.each_pair {|k, v| s[k] = v}
         return s[k]
       else
         s[k] ||= {}
