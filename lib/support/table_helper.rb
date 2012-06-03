@@ -22,7 +22,7 @@ module Support::TableHelper
         form_tag(weltel_responses_path, :method => :get) do
           hidden_field_tag(:page, 0) + 
           hidden_field_tag(:filter_key, filter_key) + 
-          select_tag(:filter_value, enum_options, :include_blank => true, :onchange => "javascript: this.form.submit();")
+          select_tag(:filter_value, enum_options, :include_blank => true, :onchange => submit_form)
         end
       end
     end
