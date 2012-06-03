@@ -5,8 +5,8 @@ module Support::TableHelper
     content_tag(:th) do
       raw(content) +
       content_tag(:div, :class => 'sort') do
-        link_to("+", params.merge(:page => 0, :sort_key => sort_key.to_s, :sort_order => 'asc'), :class => 'ascending') +
-        link_to("-", params.merge(:page => 0, :sort_key => sort_key.to_s, :sort_order => 'desc'), :class => 'descending')
+        link_to("+", params.merge(:page => 1, :sort_key => sort_key.to_s, :sort_order => 'asc'), :class => 'ascending') +
+        link_to("-", params.merge(:page => 1, :sort_key => sort_key.to_s, :sort_order => 'desc'), :class => 'descending')
       end
     end
   end
@@ -20,7 +20,7 @@ module Support::TableHelper
       raw(content) +
       content_tag(:div, :class => "filter #{(active ? 'active' : nil)}") do
         form_tag(weltel_responses_path, :method => :get) do
-          hidden_field_tag(:page, 0) + 
+          hidden_field_tag(:page, 1) + 
           hidden_field_tag(:filter_key, filter_key) + 
           select_tag(:filter_value, enum_options, :include_blank => true, :onchange => submit_form)
         end
