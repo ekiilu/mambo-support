@@ -17,13 +17,19 @@ module Support::ParamsHelper
 	end
 
 	#
+	def filter_param(context)
+		handle_session_symbol(context, :filter_key, "")
+		handle_session_value(context, :filter_value, "")
+	end
+
+	#
 	def handle_session_value(context, key, default)
 		handle_session_param(context, key, default)
 	end
 
 	#
 	def handle_session_symbol(context, key, default)
-		handle_session_param(context, key, default) { |value| value.to_sym }
+		handle_session_param(context, key, default) { |value| value.to_sym if value}
 	end
 
 	#

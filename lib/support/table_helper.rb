@@ -1,30 +1,35 @@
 # -*- encoding : utf-8 -*-
 module Support::TableHelper
-  def sorted_table_header_tag(sort_key, &block)
+	#
+  def sorted_table_header_tag(key, &block)
     content = capture { yield }.strip
     content_tag(:th) do
       raw(content) +
-      content_tag(:div, :class => 'sort') do
-        link_to("+", params.merge(:page => 1, :sort_key => sort_key.to_s, :sort_order => 'asc'), :class => 'ascending') +
-        link_to("-", params.merge(:page => 1, :sort_key => sort_key.to_s, :sort_order => 'desc'), :class => 'descending')
+      content_tag(:div, :class => "sort") do
+        link_to("+", params.merge(:page => 1, :sort_key => key, :sort_order => :asc), :class => "ascending") +
+        link_to("-", params.merge(:page => 1, :sort_key => key, :sort_order => :desc), :class => "descending")
       end
     end
   end
 
-  def filter_table_header_tag(filter_key, filter_enum, &block)
+	#
+  def filter_table_header_tag(key, options, &block)
     content = capture { yield }.strip
-    active = @filter_key && @filter_value && filter_key == @filter_key.to_sym
-    enum_options = options_for_enum(filter_enum, active ?  @filter_value : nil) # only show current if filter is active
+    active = @filter_key && @filter_value && key == @filter_key
 
     content_tag(:th) do
       raw(content) +
       content_tag(:div, :class => "filter #{(active ? 'active' : nil)}") do
-        form_tag(weltel_responses_path, :method => :get) do
+        form_tag("", :method => :get) do
           hidden_field_tag(:page, 1) +
-          hidden_field_tag(:filter_key, filter_key) +
-          select_tag(:filter_value, enum_options, :include_blank => true, :onchange => submit_form)
+          hidden_field_tag(:filter_key, key) +
+          select_tag(:filter_value, options_for_select(options, @filter_value), :include_blank => true, :onchange => submit_form)
         end
-      end
+      end +
+			content_tag(:div, :class => "sort") do
+				link_to("+", params.merge(:page => 1, :sort_key => key, :sort_order => :asc), :class => "ascending") +
+				link_to("-", params.merge(:page => 1, :sort_key => key, :sort_order => :desc), :class => "descending")
+			end
     end
   end
 end
