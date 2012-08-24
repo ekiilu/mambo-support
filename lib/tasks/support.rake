@@ -59,7 +59,7 @@ namespace :mambo do
       `git pull origin && bundle install`
     end
 
-    desc 'use local version of mambo gems'
+    desc 'use local version of mambo gems - use MAMBO_LOCAL, MAMBO_DEV, and MAMBO_PUBLIC in your Gemfile to use this task'
     task :mambo_local do
       file_path = "Gemfile"
       gemfile_text = File.read(file_path)
@@ -70,7 +70,7 @@ namespace :mambo do
       puts gemfile_text
     end
 
-    desc 'use git version of mambo gems'
+    desc 'use git version of mambo gems - use MAMBO_LOCAL, MAMBO_DEV, and MAMBO_PUBLIC in your Gemfile to use this task'
     task :mambo_dev do
       file_path = "Gemfile"
       gemfile_text = File.read(file_path)
@@ -82,7 +82,7 @@ namespace :mambo do
     end
 
 
-    desc 'use published version of mambo gems'
+    desc 'use published version of mambo gems - use MAMBO_LOCAL, MAMBO_DEV, and MAMBO_PUBLIC in your Gemfile to use this task'
     task :mambo_public do
       file_path = "Gemfile"
       gemfile_text = File.read(file_path)
