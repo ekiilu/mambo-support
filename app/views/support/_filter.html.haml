@@ -1,0 +1,24 @@
+%th
+  .title
+    = content
+  .sort
+    - link_params = {:page => 1, :sort_association => association, :sort_attribute => attribute}
+    - sort_active = @sort_association == association && @sort_attribute == attribute
+
+    = link_to( |
+      "+", |
+      link_params.merge(:sort_order => :asc), |
+      :class => "ascending #{active_class(sort_active && @sort_order == :asc)}")
+
+    = link_to( |
+      "-", |
+      link_params.merge(:sort_order => :desc), |
+      :class => "descending #{active_class(sort_active && @sort_order == :desc)}")
+
+  - filter_active = @filter_association == association && @filter_attribute == attribute && !@filter_value.blank?
+  = content_tag(:div, :class => "filter #{active_class(filter_active)}") do
+    = form_tag("", :method => :get) do
+      = hidden_field_tag(:page, 1)
+      = hidden_field_tag(:filter_association, association)
+      = hidden_field_tag(:filter_attribute, attribute)
+      = select_tag(:filter_value, options_for_select(options, @filter_value), :onchange => submit_form)
