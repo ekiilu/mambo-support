@@ -5,44 +5,34 @@
 # -*- encoding : utf-8 -*-
 module Support::ParamsHelper
 	#
-	def session_param_value(context, key, default = nil)
-		handle_session_param_value(context, key, default)
-	end
-
-	def session_param_symbol(context, key, default = nil)
-		handle_session_param_symbol(context, key, default)
+	def session_param(context, key, default = nil)
+		handle_session_param(context, key, default)
 	end
 
 	#
 	def page_param(context, per_page)
-		session_param_value(context, :page, 1)
-		session_param_value(context, :per_page, per_page)
+		session_param(context, :page, 1)
+		session_param(context, :per_page, per_page)
 	end
 
 	#
-	def sort_param(context, association, attribute, order)
-		session_param_symbol(context, :sort_association, association)
-		session_param_symbol(context, :sort_attribute, attribute)
-		session_param_symbol(context, :sort_order, order)
+	def sort_param(context,  attribute, order)
+		session_param(context, :sort_attribute, attribute)
+		session_param(context, :sort_order, order)
 	end
 
 	#
 	def filter_param(context)
-		session_param_symbol(context, :filter_association)
-		session_param_symbol(context, :filter_attribute)
-		session_param_value(context, :filter_value)
+		session_param(context, :filter_attribute)
+		session_param(context, :filter_value)
 	end
 
+private
 	#
-	def handle_session_param_value(context, key, default, &block)
+	def handle_session_param(context, key, default)
 		session[context] ||= {}
 		value = params.include?(key) ? params[key] : session[context][key] || default
-		value = yield(value) if block_given?
 		instance_variable_set("@#{key}".to_sym, value)
 		session[context][key] = value
-	end
-
-	def handle_session_param_symbol(context, key, default)
-		handle_session_param_value(context, key, default) { |value| value.blank? ? value : value.to_sym }
 	end
 end

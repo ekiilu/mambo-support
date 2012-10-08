@@ -2,15 +2,15 @@
   .title
     = content
   .sort
-    - link_params = {:page => 1, :sort_association => association, :sort_attribute => attribute}
-    - active = @sort_association == association && @sort_attribute == attribute
+    - link_params = {:page => 1, :sort_attribute => attribute}
+    - active = @sort_attribute == attribute
 
     = link_to( |
       "+", |
       link_params.merge(:sort_order => :asc), |
-      :class => "ascending #{active_class(active && @sort_order == :asc)}")
+      :class => "ascending #{active_class(active && @sort_order == "asc")}")
 
     = link_to( |
       "-", |
       link_params.merge(:sort_order => :desc), |
-      :class => "descending #{active_class(active && @sort_order == :desc)}")
+      :class => "descending #{active_class(active && @sort_order == "desc")}")

@@ -5,15 +5,15 @@
 # -*- encoding : utf-8 -*-
 module Support::TableHelper
 	#
-  def sorted_table_header_tag(association, attribute, &block)
+  def sorted_table_header_tag(attribute, &block)
     content = capture { yield }.strip
-		render(:partial => "support/sort", :locals => {:content => content, :association => association, :attribute => attribute})
+		render(:partial => "support/sort", :locals => {:content => content, :attribute => attribute})
   end
 
 	#
-  def filter_table_header_tag(association, attribute, options, &block)
+  def filter_table_header_tag(attribute, options, &block)
     content = capture { yield }.strip
-    render(:partial => "support/filter", :locals => {:content => content, :association => association, :attribute => attribute, :options => options})
+    render(:partial => "support/filter", :locals => {:content => content, :attribute => attribute, :options => options})
   end
 
   def table_header_tag(title)
