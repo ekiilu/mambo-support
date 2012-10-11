@@ -1,9 +1,13 @@
+//- This Source Code Form is subject to the terms of the Mozilla Public
+//- License, v. 2.0. If a copy of the MPL was not distributed with this
+//- file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 %th
   .title
     = content
   .sort
     - link_params = {:page => 1, :sort_attribute => attribute}
-    - sort_active = @sort_attribute == attribute
+    - sort_active = @sort_attribute == attribute.to_s
 
     = link_to( |
       "+", |
@@ -20,4 +24,4 @@
     = form_tag("", :method => :get) do
       = hidden_field_tag(:page, 1)
       = hidden_field_tag(:filter_attribute, attribute)
-      = select_tag(:filter_value, options_for_select(options, @filter_value), :onchange => submit_form)
+      = select_tag(:filter_value, options_for_select(options, @filter_value), :include_blank => true, :onchange => submit_form)
